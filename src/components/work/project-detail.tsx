@@ -16,9 +16,10 @@ type DetailBlock = {
 
 /**
  * Case-study template. Every block renders only when the project provides
- * the field — with no data populated, no block renders and no content
- * is fabricated. Order: hero → overview → problem → solution →
- * architecture → technical decisions → implementation → outcome → links.
+ * the field — unpopulated fields render nothing and no content is
+ * fabricated. Order: hero → overview → problem → solution →
+ * architecture → technical decisions → implementation → outcome →
+ * impact (always labeled estimated) → links → notes.
  */
 export function ProjectDetail({ project }: ProjectDetailProps) {
   const blocks: DetailBlock[] = [
@@ -62,7 +63,15 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
             ) : null}
           </div>
           <h1 className="type-display mt-5 text-foreground">{project.title}</h1>
-          <p className="type-body mt-5 max-w-2xl">{project.shortDescription}</p>
+          {project.recognition ? (
+            <p className="mt-4 flex items-center gap-2 font-mono text-xs text-muted-foreground">
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-signal" />
+              {project.recognition}
+            </p>
+          ) : null}
+          {project.shortDescription ? (
+            <p className="type-body mt-5 max-w-2xl">{project.shortDescription}</p>
+          ) : null}
         </header>
 
         <div className="mt-10 max-w-4xl">
@@ -85,12 +94,14 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
         ) : null}
 
         <div className="mt-12 max-w-3xl space-y-12 md:space-y-14">
-          <section aria-labelledby="overview-heading">
-            <h2 id="overview-heading" className="type-section text-foreground">
-              Overview
-            </h2>
-            <p className="type-body mt-4">{project.longDescription}</p>
-          </section>
+          {project.longDescription ? (
+            <section aria-labelledby="overview-heading">
+              <h2 id="overview-heading" className="type-section text-foreground">
+                Overview
+              </h2>
+              <p className="type-body mt-4">{project.longDescription}</p>
+            </section>
+          ) : null}
 
           {blocks.map((block) => (
             <section
@@ -123,6 +134,20 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
             </section>
           ) : null}
 
+          {project.estimatedImpact ? (
+            <section aria-labelledby="impact-heading">
+              <h2 id="impact-heading" className="type-section text-foreground">
+                Impact
+              </h2>
+              <p className="mt-4 text-[1.05rem] leading-relaxed text-foreground">
+                {project.estimatedImpact}
+              </p>
+              <p className="type-meta mt-2">
+                Estimated impact described in project documentation — not a measured result.
+              </p>
+            </section>
+          ) : null}
+
           {links.length > 0 ? (
             <section aria-labelledby="links-heading">
               <h2 id="links-heading" className="type-section text-foreground">
@@ -144,6 +169,12 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
                 ))}
               </ul>
             </section>
+          ) : null}
+
+          {project.sourceNotes ? (
+            <p className="type-meta border-t border-white/[0.06] pt-6">
+              Note — {project.sourceNotes}
+            </p>
           ) : null}
         </div>
       </Container>

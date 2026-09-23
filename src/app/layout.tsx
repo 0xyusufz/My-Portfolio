@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { site } from "@/lib/site";
 import { Navbar } from "@/components/layout/navbar";
@@ -18,6 +18,22 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: site.title,
   description: site.description,
+  openGraph: {
+    title: site.title,
+    description: site.description,
+    type: "website",
+    locale: "en_US",
+    siteName: site.name,
+  },
+  twitter: {
+    card: "summary",
+    title: site.title,
+    description: site.description,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0b0b0d",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

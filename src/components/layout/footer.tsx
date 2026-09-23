@@ -1,4 +1,5 @@
-import { footerContent, navLinks, site } from "@/lib/site";
+import { ArrowUpRight } from "lucide-react";
+import { footerContent, navLinks, profile, site, socials } from "@/lib/site";
 import { Container } from "@/components/layout/section";
 
 export function Footer() {
@@ -17,6 +18,22 @@ export function Footer() {
             </span>
           </a>
           <p className="type-meta mt-3">{footerContent.tagline}</p>
+          <ul aria-label="Social links" className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+            {socials.map((social) => (
+              <li key={social.label}>
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${profile.handle} on ${social.label}`}
+                  className="inline-flex items-center gap-1 rounded-sm font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {social.label}
+                  <ArrowUpRight aria-hidden="true" className="size-3" />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <nav aria-label="Footer">

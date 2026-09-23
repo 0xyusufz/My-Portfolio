@@ -24,9 +24,9 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 }
 
 /**
- * Data-driven case-study route. With an empty project index every slug
- * resolves to notFound() — the architecture is live, but no case study
- * exists (or is fabricated) until real data is added.
+ * Data-driven case-study route. Slugs come from the project index;
+ * unknown slugs resolve to notFound(). Blocks render only for
+ * populated fields, so thin entries stay honest.
  */
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;

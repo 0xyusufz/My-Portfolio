@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Award } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { ProjectVisual } from "@/components/work/project-visual";
 import { cn } from "@/lib/utils";
@@ -12,7 +12,11 @@ type ProjectCardProps = {
 /**
  * Premium project showcase card. Server-renderable; hover interaction is
  * CSS-only (visual scale, border/surface shift, arrow nudge) so no
- * client JavaScript is required. The whole card links to /work/[slug].
+ * client JavaScript is required.
+ *
+ * Every row is conditional: recognition, description, technologies, and
+ * GitHub/live links render only when the data exists. Missing URLs are
+ * omitted silently — never "coming soon" or "demo unavailable".
  */
 export function ProjectCard({ project, variant = "standard" }: ProjectCardProps) {
   const featured = variant === "featured";
@@ -53,18 +57,23 @@ export function ProjectCard({ project, variant = "standard" }: ProjectCardProps)
             featured ? "text-2xl md:text-[1.75rem]" : "text-xl",
           )}
         >
-          <Link
-            href={detailHref}
-            aria-label={`${project.title} — view case study`}
-            className="rounded-sm after:absolute after:inset-0 after:rounded-xl"
-          >
+          <Link href={detailHref} className="rounded-sm transition-colors hover:text-foreground/85">
             {project.title}
           </Link>
         </h3>
 
-        <p className="mt-2.5 line-clamp-3 text-[0.95rem] leading-relaxed text-muted-foreground">
-          {project.shortDescription}
-        </p>
+        {project.recognition ? (
+          <p className="mt-2.5 flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
+            <Award aria-hidden="true" className="size-3.5 shrink-0 text-signal" />
+            {project.recognition}
+          </p>
+        ) : null}
+
+        {project.shortDescription ? (
+          <p className="mt-2.5 line-clamp-3 text-[0.95rem] leading-relaxed text-muted-foreground">
+            {project.shortDescription}
+          </p>
+        ) : null}
 
         {project.technologies.length > 0 ? (
           <ul aria-label="Technologies" className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -84,20 +93,50 @@ export function ProjectCard({ project, variant = "standard" }: ProjectCardProps)
           </ul>
         ) : null}
 
-        <p className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
-          View case study
-          {featured ? (
-            <ArrowUpRight
-              aria-hidden="true"
-              className="size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            />
-          ) : (
-            <ArrowRight
-              aria-hidden="true"
-              className="size-4 transition-transform duration-200 group-hover:translate-x-1"
-            />
-          )}
-        </p>
+        <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-5">
+          <Link
+            href={detailHref}
+            aria-label={`${project.title} — view case study`}
+            className="inline-flex items-center gap-1.5 rounded-sm text-sm font-medium text-foreground"
+          >
+            View case study
+            {featured ? (
+              <ArrowUpRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            ) : (
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+              />
+            )}
+          </Link>
+          {project.sourceUrl ? (
+            <a
+              href={project.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${project.title} — source code on GitHub`}
+              className="inline-flex items-center gap-1 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              GitHub
+              <ArrowUpRight aria-hidden="true" className="size-3.5" />
+            </a>
+          ) : null}
+          {project.liveUrl ? (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${project.title} — live product`}
+              className="inline-flex items-center gap-1 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Live
+              <ArrowUpRight aria-hidden="true" className="size-3.5" />
+            </a>
+          ) : null}
+        </div>
       </div>
     </article>
   );
