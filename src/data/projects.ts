@@ -126,7 +126,7 @@ export const projects: Project[] = [
     featured: true,
     solution:
       "Documented goal: improve usability of websites on slower 2G/3G connections.",
-    recognition: "Runner-Up — Hack-O-Mania 2.0",
+    recognition: "Hackathon Winner — Google Developer Groups (GDG)",
   },
   /*
    * Secondary work — repository links verified to exist. Metadata stays
