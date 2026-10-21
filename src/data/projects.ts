@@ -131,7 +131,8 @@ export const projects: Project[] = [
   /*
    * Secondary work — repository links verified to exist. Metadata stays
    * minimal (title, slug, URL, category) because descriptions and
-   * technologies are not verified. Surfaced in Lab, not Selected Work.
+   * technologies are not verified. Not surfaced on the homepage —
+   * detail routes remain available.
    */
   {
     slug: "focustag",

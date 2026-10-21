@@ -4,7 +4,8 @@ import { Hero } from "@/components/hero/hero";
 import { Container } from "@/components/layout/section";
 import { SelectedWork } from "@/components/work/selected-work";
 import { WhatIBuild } from "@/components/build/what-i-build";
-import { Lab } from "@/components/lab/lab";
+import { achievements } from "@/data/achievements";
+import { Achievements } from "@/components/achievements/achievements";
 import { About } from "@/components/about/about";
 import { Contact } from "@/components/contact/contact";
 
@@ -17,7 +18,7 @@ export default function Home() {
       </Container>
       <SelectedWork projects={getFeaturedProjects()} />
       <WhatIBuild capabilities={capabilities} />
-      <Lab projects={projects} />
+      <Achievements entries={achievements} />
       <About projects={projects} />
       <Contact />
     </main>

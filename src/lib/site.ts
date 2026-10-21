@@ -29,7 +29,6 @@ export type NavLink = {
 
 export const navLinks: NavLink[] = [
   { label: "Work", href: "#work" },
-  { label: "Lab", href: "#lab" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
@@ -62,13 +61,6 @@ export const buildContent = {
     "I work across AI systems, automation, product development, and backend infrastructure — turning ideas into working software.",
 } as const;
 
-export const labContent = {
-  eyebrow: "Lab / more work",
-  heading: "Experiments, products, and things I’ve built.",
-  supporting:
-    "A selection of smaller products, experiments, and technical projects built while exploring different ideas and technologies.",
-} as const;
-
 export const aboutContent = {
   eyebrow: "About",
   heading: "I build, ship, and keep improving real software.",
@@ -85,6 +77,13 @@ export const contactContent = {
   supporting:
     "If you're working on an AI product, automation system, SaaS idea, or software project, I'd be interested in hearing about it.",
   primaryCtaLabel: "Connect on LinkedIn",
+} as const;
+
+export const achievementsContent = {
+  eyebrow: "Achievements & Events",
+  heading: "The moments behind the work.",
+  supporting:
+    "A visual record of competitions, recognitions, and events that have been part of my journey as a developer.",
 } as const;
 
 export const footerContent = {
